@@ -1,0 +1,40 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+*.xcuserstate
+*.xccheckout
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+# SwiftPM
+/.build/
+/Packages/
+/.swiftpm/
+
+# CocoaPods (if you're using it)
+/Pods/
+
+# Carthage (if you're using it)
+/Carthage/
+
+# Firebase Crashlytics
+*.dSYM.zip
+*.dSYM
+
+# User-specific settings
+*.xcuserdatad/
+*.xcuserdata/
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
+*.lock
+*.tmp
+*.DS_Store
+
+# Secrets (if any)
+Secrets.plist
+GoogleService-Info.plist
