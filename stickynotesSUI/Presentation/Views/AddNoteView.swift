@@ -10,6 +10,7 @@ import SwiftUI
 struct AddNoteView: View {
     @State private var titleText: String = ""
     @State private var descriptionText: String = ""
+    @State private var isPinned: Bool = false
     
     var body: some View {
         ZStack {
@@ -83,9 +84,9 @@ struct AddNoteView: View {
         .navigationTitle("Add Note")
         .toolbar {
             Button(action: {
-                print("click")
+                isPinned.toggle()
             }, label: {
-                Image(systemName: "pin.fill")
+                Image(systemName: isPinned ? "pin.fill" : "pin")
             })
         }
     }
