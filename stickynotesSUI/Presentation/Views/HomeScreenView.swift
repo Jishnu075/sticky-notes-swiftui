@@ -27,7 +27,7 @@ struct HomeScreenView: View {
             .navigationTitle("Sticky Notes")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    NavigationLink (destination: AddNoteView()) {
+                    NavigationLink (destination: AddNoteView(viewModel: viewModel)) {
                         Image(systemName: "plus")
                             .foregroundStyle(.white)
                             .frame(width: 30, height: 30)

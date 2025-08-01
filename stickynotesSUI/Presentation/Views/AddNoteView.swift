@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct AddNoteView: View {
+    @ObservedObject var viewModel: NotesViewModel
+    
     @State private var titleText: String = ""
     @State private var descriptionText: String = ""
     @State private var isPinned: Bool = false
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
@@ -62,6 +66,10 @@ struct AddNoteView: View {
                         Spacer()
                         Button(action: {
                             print("save note")
+                            let note = Note(title: titleText, content: descriptionText, dateCreated: Date.now, dateModified: Date.now, isPinned: isPinned, isArchived: false)
+                            viewModel.addNote(note: note)
+                            dismiss()
+                            
                         }) {
                             //                        Image(systemName: "checkmark")
                             //                            .font(.title2)
@@ -81,6 +89,12 @@ struct AddNoteView: View {
                 }
             }
         }
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("Ok"){
+                viewModel.showError = false
+                viewModel.currentError = nil
+            }
+        }
         .navigationTitle("Add Note")
         .toolbar {
             Button(action: {
@@ -92,6 +106,3 @@ struct AddNoteView: View {
     }
 }
 
-#Preview {
-    AddNoteView()
-}

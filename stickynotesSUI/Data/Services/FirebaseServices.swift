@@ -12,15 +12,16 @@ class FirebaseServices {
     private let db = Firestore.firestore()
     
     
-    func fetchAllNotes(completion: @escaping ([Note]) -> Void){
+    func fetchAllNotes(completion: @escaping (Result<[Note], Error>) -> Void){
         db.collection("notes").order(by: "dateModified", descending: true)
             .addSnapshotListener { snapshot, error in
                 
                 if let error = error {
                     print("Error fetching notes: \(error)")
+                    completion(.failure(error))
                     return
                 }
-                
+                 
                 
                 let fetchedNotes = snapshot?.documents.compactMap { document in
                     try? document.data(as: Note.self)
@@ -34,9 +35,35 @@ class FirebaseServices {
                                    }
                                    return first.isPinned && !second.isPinned
                                }
-                completion(sortedNotes)
+                completion(.success(sortedNotes))
                 }
         
+    }
+    
+    func addNote(note: Note, completion: @escaping (Bool) -> Void) {
+        do {
+            try db.collection("notes").addDocument(from: note) { error in
+                if let error = error {
+                    print("Error adding note: \(error)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+                
+            }
+        }
+        catch {
+            print("Error adding note: \(error)")
+            completion(false)
+        }
+    }
+    
+    func updateNote(note: Note) {
+        do  {
+            try db.collection("notes").document(note.id!).setData(from: note)
+        } catch {
+            print("Error updating note: \(error)")
+        }
     }
     
     func testWrite() {
