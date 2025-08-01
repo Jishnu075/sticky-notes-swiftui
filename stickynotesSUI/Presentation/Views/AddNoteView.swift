@@ -65,7 +65,6 @@ struct AddNoteView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            print("save note")
                             let note = Note(title: titleText, content: descriptionText, dateCreated: Date.now, dateModified: Date.now, isPinned: isPinned, isArchived: false)
                             viewModel.addNote(note: note)
                             dismiss()
@@ -94,6 +93,8 @@ struct AddNoteView: View {
                 viewModel.showError = false
                 viewModel.currentError = nil
             }
+        } message: {
+            Text(viewModel.currentError?.message ?? "Something went wrong!")
         }
         .navigationTitle("Add Note")
         .toolbar {

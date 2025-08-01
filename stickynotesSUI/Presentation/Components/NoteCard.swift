@@ -12,6 +12,7 @@ struct NoteCard: View {
     let description: String
     let isPinned: Bool
     var cardColor: Color = Color.yellow
+    @State private var showingBottomSheet = false
     
     var body: some View {
             VStack (alignment: .leading, spacing: 8) {
@@ -30,7 +31,12 @@ struct NoteCard: View {
                 RoundedRectangle(cornerRadius: 12, style: .circular)
                     .fill(cardColor)
                     .shadow(color: .gray.opacity(0.4), radius: 4, x: 2, y: 2)
-            )
+            ).onTapGesture {
+                showingBottomSheet = true
+            }
+            .sheet(isPresented: $showingBottomSheet) {
+                NoteDetailBottomSheet(title: title, description: description, isPinned: isPinned)
+            }
             .overlay(alignment: .topTrailing) {
                 if isPinned {
                     Image(systemName: "pin.fill")
@@ -38,11 +44,7 @@ struct NoteCard: View {
                         .padding(.trailing, 6)
                 }
             }
-            
-  
-          
-            
-        }
+    }
 }
 
 #Preview {

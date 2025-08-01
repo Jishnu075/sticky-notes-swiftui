@@ -16,7 +16,6 @@ struct HomeScreenView: View {
     
     var body: some View {
         NavigationStack {
-            
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(viewModel.notes) { note in
