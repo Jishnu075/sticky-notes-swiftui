@@ -1,4 +1,4 @@
-# sticky-notes-swiftui
+# sticky-notes-swiftui (ONGOING)
 
 An iOS app built with **SwiftUI** for creating and managing sticky notes.
 
