@@ -13,7 +13,7 @@ struct NoteCard: View {
     let isPinned: Bool
     var cardColor: Color = Color.yellow
     @State private var showingBottomSheet = false
-    
+    @State private var showingAlert = false
     var body: some View {
             VStack (alignment: .leading, spacing: 8) {
                 Text (title)
@@ -33,6 +33,18 @@ struct NoteCard: View {
                     .shadow(color: .gray.opacity(0.4), radius: 4, x: 2, y: 2)
             ).onTapGesture {
                 showingBottomSheet = true
+            }
+            .contextMenu {
+                Button(action: {
+                    print("edit tapped") // pass edit mode flag to bottomsheet
+                }) {
+                    Label("Edit", systemImage: "pencil")
+                }
+                Button(role: .destructive, action: {
+                    print("Delete tapped") // show alert before deleting it
+                }) {
+                    Label("Delete", systemImage: "trash")
+                }
             }
             .sheet(isPresented: $showingBottomSheet) {
                 NoteDetailBottomSheet(title: title, description: description, isPinned: isPinned)
